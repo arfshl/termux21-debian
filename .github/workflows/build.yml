@@ -1,4 +1,4 @@
-name: "Build debian rootfs"
+name: "Build ubuntu rootfs"
 
 on:
   workflow_dispatch:
@@ -8,7 +8,7 @@ permissions:
 
 jobs:
 
-  build-squeeze:
+  build-trusty:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -34,13 +34,13 @@ jobs:
               ;;
               esac
               # Fetch image manifest
-              manifest=$(docker manifest inspect debian:squeeze)
+              manifest=$(docker manifest inspect ubuntu:trusty)
               # Fetch image digest
               arch="$ARCH"
               digest=$(echo "$manifest" | jq -r ".manifests[] | select(.platform.architecture == \"$arch\") | .digest")
               # Pull and Export image
-              docker pull "debian:squeeze@${digest}"
-              docker export $(docker create "debian:squeeze@${digest}") | xz -T 0 > "$GITHUB_WORKSPACE/debian-squeeze-${{ matrix.arch }}.tar.xz"
+              docker pull "ubuntu:trusty@${digest}"
+              docker export $(docker create "ubuntu:trusty@${digest}") | xz -T 0 > "$GITHUB_WORKSPACE/ubuntu-trusty-${{ matrix.arch }}.tar.xz"
 
       - name: Push to release
         uses: softprops/action-gh-release@v3
@@ -48,10 +48,10 @@ jobs:
           tag_name: rootfs
           name: rootfs
           files: |
-            debian-squeeze-*.tar.xz
+            ubuntu-trusty-*.tar.xz
           preserve_order: true
 
-  build-squeeze-arm:
+  build-trusty-arm:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -77,13 +77,13 @@ jobs:
               ;;
               esac
               # Fetch image manifest
-              manifest=$(docker manifest inspect debian:squeeze)
+              manifest=$(docker manifest inspect ubuntu:trusty)
               # Fetch image digest
               arch="$ARCH"
               digest=$(echo "$manifest" | jq -r ".manifests[] | select(.platform.architecture == \"$arch\") | select(.platform.variant == \"v7\") | .digest")
               # Pull and Export image
-              docker pull "debian:squeeze@${digest}"
-              docker export $(docker create "debian:squeeze@${digest}") | xz -T 0 > "$GITHUB_WORKSPACE/debian-squeeze-${{ matrix.arch }}.tar.xz"
+              docker pull "ubuntu:trusty@${digest}"
+              docker export $(docker create "ubuntu:trusty@${digest}") | xz -T 0 > "$GITHUB_WORKSPACE/ubuntu-trusty-${{ matrix.arch }}.tar.xz"
 
       - name: Push to release
         uses: softprops/action-gh-release@v3
@@ -91,11 +91,10 @@ jobs:
           tag_name: rootfs
           name: rootfs
           files: |
-            debian-squeeze-*.tar.xz
+            ubuntu-trusty-*.tar.xz
           preserve_order: true
 
-
-  build-wheezy:
+  build-xenial:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -121,13 +120,13 @@ jobs:
               ;;
               esac
               # Fetch image manifest
-              manifest=$(docker manifest inspect debian:wheezy)
+              manifest=$(docker manifest inspect ubuntu:xenial)
               # Fetch image digest
               arch="$ARCH"
               digest=$(echo "$manifest" | jq -r ".manifests[] | select(.platform.architecture == \"$arch\") | .digest")
               # Pull and Export image
-              docker pull "debian:wheezy@${digest}"
-              docker export $(docker create "debian:wheezy@${digest}") | xz -T 0 > "$GITHUB_WORKSPACE/debian-wheezy-${{ matrix.arch }}.tar.xz"
+              docker pull "ubuntu:xenial@${digest}"
+              docker export $(docker create "ubuntu:xenial@${digest}") | xz -T 0 > "$GITHUB_WORKSPACE/ubuntu-xenial-${{ matrix.arch }}.tar.xz"
 
       - name: Push to release
         uses: softprops/action-gh-release@v3
@@ -135,10 +134,10 @@ jobs:
           tag_name: rootfs
           name: rootfs
           files: |
-            debian-wheezy-*.tar.xz
+            ubuntu-xenial-*.tar.xz
           preserve_order: true
 
-  build-wheezy-arm:
+  build-xenial-arm:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -164,13 +163,13 @@ jobs:
               ;;
               esac
               # Fetch image manifest
-              manifest=$(docker manifest inspect debian:wheezy)
+              manifest=$(docker manifest inspect ubuntu:xenial)
               # Fetch image digest
               arch="$ARCH"
               digest=$(echo "$manifest" | jq -r ".manifests[] | select(.platform.architecture == \"$arch\") | select(.platform.variant == \"v7\") | .digest")
               # Pull and Export image
-              docker pull "debian:wheezy@${digest}"
-              docker export $(docker create "debian:wheezy@${digest}") | xz -T 0 > "$GITHUB_WORKSPACE/debian-wheezy-${{ matrix.arch }}.tar.xz"
+              docker pull "ubuntu:xenial@${digest}"
+              docker export $(docker create "ubuntu:xenial@${digest}") | xz -T 0 > "$GITHUB_WORKSPACE/ubuntu-xenial-${{ matrix.arch }}.tar.xz"
 
       - name: Push to release
         uses: softprops/action-gh-release@v3
@@ -178,10 +177,10 @@ jobs:
           tag_name: rootfs
           name: rootfs
           files: |
-            debian-wheezy-*.tar.xz
+            ubuntu-xenial-*.tar.xz
           preserve_order: true
 
-  build-jessie:
+  build-bionic:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -207,13 +206,13 @@ jobs:
               ;;
               esac
               # Fetch image manifest
-              manifest=$(docker manifest inspect debian:jessie)
+              manifest=$(docker manifest inspect ubuntu:bionic)
               # Fetch image digest
               arch="$ARCH"
               digest=$(echo "$manifest" | jq -r ".manifests[] | select(.platform.architecture == \"$arch\") | .digest")
               # Pull and Export image
-              docker pull "debian:jessie@${digest}"
-              docker export $(docker create "debian:jessie@${digest}") | xz -T 0 > "$GITHUB_WORKSPACE/debian-jessie-${{ matrix.arch }}.tar.xz"
+              docker pull "ubuntu:bionic@${digest}"
+              docker export $(docker create "ubuntu:bionic@${digest}") | xz -T 0 > "$GITHUB_WORKSPACE/ubuntu-bionic-${{ matrix.arch }}.tar.xz"
 
       - name: Push to release
         uses: softprops/action-gh-release@v3
@@ -221,10 +220,10 @@ jobs:
           tag_name: rootfs
           name: rootfs
           files: |
-            debian-jessie-*.tar.xz
+            ubuntu-bionic-*.tar.xz
           preserve_order: true
 
-  build-jessie-arm:
+  build-bionic-arm:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -250,13 +249,13 @@ jobs:
               ;;
               esac
               # Fetch image manifest
-              manifest=$(docker manifest inspect debian:jessie)
+              manifest=$(docker manifest inspect ubuntu:bionic)
               # Fetch image digest
               arch="$ARCH"
               digest=$(echo "$manifest" | jq -r ".manifests[] | select(.platform.architecture == \"$arch\") | select(.platform.variant == \"v7\") | .digest")
               # Pull and Export image
-              docker pull "debian:jessie@${digest}"
-              docker export $(docker create "debian:jessie@${digest}") | xz -T 0 > "$GITHUB_WORKSPACE/debian-jessie-${{ matrix.arch }}.tar.xz"
+              docker pull "ubuntu:bionic@${digest}"
+              docker export $(docker create "ubuntu:bionic@${digest}") | xz -T 0 > "$GITHUB_WORKSPACE/ubuntu-bionic-${{ matrix.arch }}.tar.xz"
 
       - name: Push to release
         uses: softprops/action-gh-release@v3
@@ -264,178 +263,6 @@ jobs:
           tag_name: rootfs
           name: rootfs
           files: |
-            debian-jessie-*.tar.xz
+            ubuntu-bionic-*.tar.xz
           preserve_order: true
-
-
-  build-stretch:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        arch: [aarch64, x86_64, i386]
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
-      - name: Start Build!
-        run: |
-              ARCH=${{ matrix.arch }}
-              case "$ARCH" in
-              x86_64) ARCH=amd64 ;;
-              amd64) ARCH=amd64 ;;
-              aarch64) ARCH=arm64 ;;
-              arm64) ARCH=arm64 ;;
-              arm) ARCH=arm ;;
-              i386) ARCH=386 ;;
-              *)
-              echo "Unsupported architecture: $ARCH"
-              exit 1
-              ;;
-              esac
-              # Fetch image manifest
-              manifest=$(docker manifest inspect debian:stretch)
-              # Fetch image digest
-              arch="$ARCH"
-              digest=$(echo "$manifest" | jq -r ".manifests[] | select(.platform.architecture == \"$arch\") | .digest")
-              # Pull and Export image
-              docker pull "debian:stretch@${digest}"
-              docker export $(docker create "debian:stretch@${digest}") | xz -T 0 > "$GITHUB_WORKSPACE/debian-stretch-${{ matrix.arch }}.tar.xz"
-
-      - name: Push to release
-        uses: softprops/action-gh-release@v3
-        with:
-          tag_name: rootfs
-          name: rootfs
-          files: |
-            debian-stretch-*.tar.xz
-          preserve_order: true
-
-  build-stretch-arm:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        arch: [arm]
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
-      - name: Start Build!
-        run: |
-              ARCH=${{ matrix.arch }}
-              case "$ARCH" in
-              x86_64) ARCH=amd64 ;;
-              amd64) ARCH=amd64 ;;
-              aarch64) ARCH=arm64 ;;
-              arm64) ARCH=arm64 ;;
-              arm) ARCH=arm ;;
-              i386) ARCH=386 ;;
-              *)
-              echo "Unsupported architecture: $ARCH"
-              exit 1
-              ;;
-              esac
-              # Fetch image manifest
-              manifest=$(docker manifest inspect debian:stretch)
-              # Fetch image digest
-              arch="$ARCH"
-              digest=$(echo "$manifest" | jq -r ".manifests[] | select(.platform.architecture == \"$arch\") | select(.platform.variant == \"v7\") | .digest")
-              # Pull and Export image
-              docker pull "debian:stretch@${digest}"
-              docker export $(docker create "debian:stretch@${digest}") | xz -T 0 > "$GITHUB_WORKSPACE/debian-stretch-${{ matrix.arch }}.tar.xz"
-
-      - name: Push to release
-        uses: softprops/action-gh-release@v3
-        with:
-          tag_name: rootfs
-          name: rootfs
-          files: |
-            debian-stretch-*.tar.xz
-          preserve_order: true
-
-  build-buster:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        arch: [aarch64, x86_64, i386]
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
-      - name: Start Build!
-        run: |
-              ARCH=${{ matrix.arch }}
-              case "$ARCH" in
-              x86_64) ARCH=amd64 ;;
-              amd64) ARCH=amd64 ;;
-              aarch64) ARCH=arm64 ;;
-              arm64) ARCH=arm64 ;;
-              arm) ARCH=arm ;;
-              i386) ARCH=386 ;;
-              *)
-              echo "Unsupported architecture: $ARCH"
-              exit 1
-              ;;
-              esac
-              # Fetch image manifest
-              manifest=$(docker manifest inspect debian:buster)
-              # Fetch image digest
-              arch="$ARCH"
-              digest=$(echo "$manifest" | jq -r ".manifests[] | select(.platform.architecture == \"$arch\") | .digest")
-              # Pull and Export image
-              docker pull "debian:buster@${digest}"
-              docker export $(docker create "debian:buster@${digest}") | xz -T 0 > "$GITHUB_WORKSPACE/debian-buster-${{ matrix.arch }}.tar.xz"
-
-      - name: Push to release
-        uses: softprops/action-gh-release@v3
-        with:
-          tag_name: rootfs
-          name: rootfs
-          files: |
-            debian-buster-*.tar.xz
-          preserve_order: true
-
-  build-buster-arm:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        arch: [arm]
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
-      - name: Start Build!
-        run: |
-              ARCH=${{ matrix.arch }}
-              case "$ARCH" in
-              x86_64) ARCH=amd64 ;;
-              amd64) ARCH=amd64 ;;
-              aarch64) ARCH=arm64 ;;
-              arm64) ARCH=arm64 ;;
-              arm) ARCH=arm ;;
-              i386) ARCH=386 ;;
-              *)
-              echo "Unsupported architecture: $ARCH"
-              exit 1
-              ;;
-              esac
-              # Fetch image manifest
-              manifest=$(docker manifest inspect debian:buster)
-              # Fetch image digest
-              arch="$ARCH"
-              digest=$(echo "$manifest" | jq -r ".manifests[] | select(.platform.architecture == \"$arch\") | select(.platform.variant == \"v7\") | .digest")
-              # Pull and Export image
-              docker pull "debian:buster@${digest}"
-              docker export $(docker create "debian:buster@${digest}") | xz -T 0 > "$GITHUB_WORKSPACE/debian-buster-${{ matrix.arch }}.tar.xz"
-
-      - name: Push to release
-        uses: softprops/action-gh-release@v3
-        with:
-          tag_name: rootfs
-          name: rootfs
-          files: |
-            debian-buster-*.tar.xz
-          preserve_order: true
+  
