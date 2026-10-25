@@ -4,9 +4,6 @@
 - [Termux App](https://github.com/termux/termux-app/releases)
 - [VNC Viewer](https://play.google.com/store/apps/details?id=com.realvnc.viewer.android)
 
-Supported Desktop Environment:
-- XFCE, MATE, LXQt, LXDE (stable and worked well)
-
 ## Repo fix (important)
 termux21 scientific and games repo GPG signature is expired and will interfere with apt package manager, we recommends to remove it instead with this command:
 
