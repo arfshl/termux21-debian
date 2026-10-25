@@ -1,0 +1,50 @@
+## Support for Android 5/6 without proot-distro, based on andronixapp/andronixorigin
+
+## You Need
+- [Termux App](https://github.com/termux/termux-app/releases)
+- [VNC Viewer](https://play.google.com/store/apps/details?id=com.realvnc.viewer.android)
+
+Supported Desktop Environment:
+- XFCE, MATE, LXQt, LXDE (stable and worked well)
+
+## Repo fix (important)
+termux21 scientific and games repo GPG signature is expired and will interfere with apt package manager, we recommends to remove it instead with this command:
+
+    rm $PREFIX/etc/apt/sources.list.d/*
+
+| Distribution     | Flavor/Desktop Environment | Supported CPU Arch | Docker Registry |
+|------------------|----------------------------|----------------|-----------------|
+
+| [Ubuntu 18.04 LTS Bionic Beaver](https://github.com/arfshl/termux21-proot/tree/main/ubuntu-bionic) | CLI XFCE | `arm` `aarch64` `x86_64` `i386` | `ubuntu:bionic` |
+| [Ubuntu 16.04 LTS Xenial Xerus ](https://github.com/arfshl/termux21-proot/tree/main/ubuntu-xenial) | CLI XFCE | `arm` `aarch64` `x86_64` `i386` | `ubuntu:xenial` |
+| [Ubuntu 14.04 LTS Trusty Tahr](https://github.com/arfshl/termux21-proot/tree/main/ubuntu-trusty) | CLI XFCE | `arm` `aarch64` `x86_64` `i386` | `ubuntu:trusty` |
+
+## Uninstalling
+```
+- Rootfs-only uninstall
+#!/bin/sh
+cd ~/termux21-proot && chmod -R 777 [distro aliases] && rm -rf [distro aliases]
+
+rm -f /data/data/com.termux/files/usr/bin/[distro aliases]
+
+
+- Full Uninstall, including in-termux dependency
+#!/bin/sh
+cd ~/termux21-proot && chmod -R 777 [distro aliases] && rm -rf [distro aliases]
+
+rm -f /data/data/com.termux/files/usr/bin/[distro aliases]
+
+apt remove proot pulseaudio -y && apt autoremove -y
+
+Replace [distro aliases] with distro alias you're using, available on installation page
+```
+
+# Credits
+
+[andronixapp/andronixorigin](https://github.com/AndronixApp/AndronixOrigin) Inspiration for making this project, VNC startup mechanism, Licensed under MIT License.
+
+[linuxmasterdroid/termux-desktops](https://github.com/LinuxDroidMaster/Termux-Desktops) Pulseaudio startup mechanism, Licensed under GPLv3.
+
+[Termux PRoot Distro v4](https://github.com/termux/proot-distro/tree/98b6d71aaf74b4fe2fc545cab32a7ecc879ad8e9) rootfs build workflows, Licensed under GPLv3.
+
+Pulseaudio fix for One UI, [Issue #19623 on termux-packages](https://github.com/termux/termux-packages/issues/19623)
