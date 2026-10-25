@@ -14,10 +14,9 @@ termux21 scientific and games repo GPG signature is expired and will interfere w
 
 | Distribution     | Flavor/Desktop Environment | Supported CPU Arch | Docker Registry |
 |------------------|----------------------------|----------------|-----------------|
-
 | [Ubuntu 18.04 LTS Bionic Beaver](https://github.com/arfshl/termux21-proot/tree/main/ubuntu-bionic) | CLI XFCE | `arm` `aarch64` `x86_64` `i386` | `ubuntu:bionic` |
 | [Ubuntu 16.04 LTS Xenial Xerus ](https://github.com/arfshl/termux21-proot/tree/main/ubuntu-xenial) | CLI XFCE | `arm` `aarch64` `x86_64` `i386` | `ubuntu:xenial` |
-| [Ubuntu 14.04 LTS Trusty Tahr](https://github.com/arfshl/termux21-proot/tree/main/ubuntu-trusty) | CLI XFCE | `arm` `aarch64` `x86_64` `i386` | `ubuntu:trusty` |
+| [Ubuntu 14.04 LTS Trusty Tahr](https://github.com/arfshl/termux21-proot/tree/main/ubuntu-trusty)   | CLI XFCE | `arm` `aarch64` `x86_64` `i386` | `ubuntu:trusty` |
 
 ## Uninstalling
 ```
